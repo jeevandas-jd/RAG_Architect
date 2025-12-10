@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 load_dotenv()
 from typing import List, Dict
 import weaviate
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings,GoogleGenerativeAI
 
 from config import (
     WEAVIATE_URL,
@@ -56,7 +56,19 @@ def retrieve_context(question: str) -> List[Dict]:
 
     return get_block.get(WEAVIATE_CLASS_NAME, [])
 
-
+def generate_answer_with_google(question: str, context_chunks: List[Dict]) -> str:
+    model=GoogleGenerativeAI(
+        model="gemini-2.5-flash",
+        google_api_key=os.getenv("google_api_key")
+    )
+    prompt = (
+        "You are an assistant. Use the provided CONTEXT to answer the question. "
+        "If the answer is not contained, say you don't know.\n\n"
+        f"CONTEXT:\n{chr(10).join(context_chunks)}\n\nQUESTION: {question}"
+    )
+    resp = model.generate(prompts=[prompt])
+    return resp.content if hasattr(resp, "content") else str(resp)
+    
 def simple_print_answer(question: str):
     hits = retrieve_context(question)
 
@@ -75,7 +87,15 @@ def simple_print_answer(question: str):
         print(text[:1000] + ("..." if len(text) > 1000 else ""))
 
     print("\n[NOTE] In Sprint 2 we’ll send these chunks to an LLM to generate a proper answer.")
+def retrive_and_answer(question: str ,top_k :int = TOP_K) -> str:
+    hits = retrieve_context(question)
 
+    if not hits:
+        return "No relevant chunks found."
+
+    context_texts = [hit.get("text", "") for hit in hits]
+    answer = generate_answer_with_google(question, context_texts)
+    return answer
 
 if __name__ == "__main__":
     import argparse
@@ -84,4 +104,11 @@ if __name__ == "__main__":
     parser.add_argument("question", help="Your question about the ingested documents")
     args = parser.parse_args()
 
-    simple_print_answer(args.question)
+    # Capture and print the result
+    final_answer = retrive_and_answer(args.question)
+    
+    print("\n==============================")
+    print("🤖 Final Generated Answer:")
+    print("==============================")
+    print(final_answer)
+    print("==============================")
