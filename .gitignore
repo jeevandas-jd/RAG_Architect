@@ -1,0 +1,24 @@
+# Virtual Environment
+.venv/
+venv/
+env/
+__pycache__/
+
+# Python specific files
+*.pyc
+
+# Local data and log files
+*.log
+*.sqlite
+/data/
+
+# Specific to your project (where secrets might be)
+config.py # ONLY if your config.py contains the API key. 
+          # If it only contains URLs and class names, do not ignore it.
+.env
+
+# PDF files used for ingestion (if you don't want to track the sample PDF)
+*.pdf
+
+# Operating System files
+.DS_Store

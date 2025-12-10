@@ -1,0 +1,26 @@
+Assessment Instructions 
+Task 1: Develop a document ingestion and retrieval application
+● Create an agentic document QA application or AI workflow
+using an agent development framework or llm framework
+● Langgraph or Langchain preferred
+● Local llm inference preferred.
+● Use a vectorstore to keep the document vectors
+● Weaviate preferred
+● Create an api server over the ai application
+● FastAPI preferred
+● Containerize the application with docker
+Task 2: Evaluation of the AI application
+● Evaluate the accuracy and precision of the ai application with the following 
+metrics:
+● Retrieval accuracy, Retrieval precision
+● Contextual accuracy, Contextual precision
+● Use any llm evaluation framework like mlflow, ragas, etc.,
+Task 3: Enhance the Retrieval pipeline with HyDe
+● Run the evaluation on enhanced pipeline
+Task 4: Architecture and evaluation report
+● Create the architecture diagram of the application developed.
+● Include a short summary of the data flow
+● Include the evaluation report summary
+Note: The report is mandatory. It must include the progress of the tasks and the 
+milestones you have achieved. While Tasks 2 and 3 are optional, completing 
+them will appreciably strengthen your candidacy for selection.
