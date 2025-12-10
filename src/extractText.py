@@ -16,7 +16,8 @@ def extract_text_from_pdf(pdf_path):
     
     return text 
 
-if __name__ == "__main__":
+"""if __name__ == "__main__":
     pdf_path = "sample.pdf"  # Replace with your PDF file path
     extracted_text = extract_text_from_pdf(pdf_path)
     print(extracted_text)
+"""

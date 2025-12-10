@@ -1,31 +1,40 @@
-version: '3.4'
+version: "3.8"
+
 services:
   weaviate:
+    image: semitechnologies/weaviate:1.26.0
     command:
       - --host
       - 0.0.0.0
       - --port
-      - '8080'
+      - "8080"
       - --scheme
       - http
-    image: semitechnologies/weaviate:1.26.0
     ports:
-      - 8080:8080
+      - "8080:8080"
     volumes:
       - weaviate_data:/var/lib/weaviate
     environment:
-      TRANSFORMERS_INFERENCE_API: 'http://t2v-transformers:8080'
-      DEFAULT_VECTORIZER_MODULE: 'text2vec-transformers'
-      ENABLE_MODULES: 'text2vec-transformers'
-      AUTHENTICATION_ANONYMOUS_ACCESS: 'true'
-      PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
-      CLUSTER_HOSTNAME: 'node1'
-  
-  t2v-transformers:
-    image: semitechnologies/transformers-inference:sentence-transformers-multi-qa-MiniLM-L6-cos-v1
+      # Keep anonymous access for dev. In prod, secure this.
+      AUTHENTICATION_ANONYMOUS_ACCESS: "true"
+      PERSISTENCE_DATA_PATH: "/var/lib/weaviate"
+      CLUSTER_HOSTNAME: "node1"
+
+  app:
+    build:
+      context: .
+      dockerfile: docker/dockerfile.app
+    ports:
+      - "8000:8000"
     environment:
-      ENABLE_CUDA: '0'
+      - WEAVIATE_URL=http://weaviate:8080
+      - LLM_PROVIDER=google
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      
+    depends_on:
+      - weaviate
+    volumes:
+      - ./data:/data
 
 volumes:
   weaviate_data:
-

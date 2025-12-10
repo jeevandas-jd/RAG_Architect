@@ -97,18 +97,3 @@ def retrive_and_answer(question: str ,top_k :int = TOP_K) -> str:
     answer = generate_answer_with_google(question, context_texts)
     return answer
 
-if __name__ == "__main__":
-    import argparse
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument("question", help="Your question about the ingested documents")
-    args = parser.parse_args()
-
-    # Capture and print the result
-    final_answer = retrive_and_answer(args.question)
-    
-    print("\n==============================")
-    print("🤖 Final Generated Answer:")
-    print("==============================")
-    print(final_answer)
-    print("==============================")

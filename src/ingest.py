@@ -100,7 +100,7 @@ def ingest_pdf_to_weaviate(pdf_path: str, source_name: str = None, batch_size: i
     print("[DONE] Ingestion complete.")
 
 
-if __name__ == "__main__":
+"""if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="Ingest a PDF into Weaviate using Google embeddings.")
@@ -110,3 +110,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     ingest_pdf_to_weaviate(args.pdf_path, source_name=args.source, batch_size=args.batch_size)
+"""

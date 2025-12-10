@@ -1,0 +1,19 @@
+# web framework (pydantic v2 compatible)
+fastapi>=0.100.0,<0.110.0
+uvicorn[standard]==0.22.0
+
+# Weaviate client that works with Weaviate 1.26.x
+weaviate-client==4.6.7
+
+# Google embeddings wrapper
+langchain-google-genai==0.0.7
+
+# Core utilities
+python-multipart==0.0.6
+pypdf==4.2.0
+tqdm==4.66.4
+python-dotenv==1.0.1
+requests==2.32.0
+
+# pin pydantic v2 explicitly to avoid resolution ambiguity
+pydantic>=2.5.1

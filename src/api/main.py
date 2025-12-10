@@ -6,7 +6,7 @@ import shutil
 from pathlib import Path
 
 from ingest import ingest_pdf_to_weaviate
-from query import retrieve_and_answer
+from query import retrive_and_answer
 
 app = FastAPI(title="RAG Architect API")
 
@@ -32,7 +32,8 @@ async def ingest(file: UploadFile = File(...), source: str = Form(None)):
 @app.post("/query")
 async def query(question: str = Form(...)):
     try:
-        result = retrieve_and_answer(question)
+        result = retrive_and_answer(question)
         return result
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
+
